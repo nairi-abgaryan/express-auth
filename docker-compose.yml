@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  postgres:
+      container_name: postgresql
+      image: postgres:12
+      environment:
+        POSTGRES_DB: test
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: secret
+      ports:
+       - "5432:5432"
+  mongo:
+      container_name: mongo-test
+      image: mongo
+      environment:
+        MONGO_DB: messaging_local
+        MONGO_USER: user_messaging
+        MONGO_PASSWORD: password_messaging
+      ports:
+        - "27017-27019:27017-27019"
+      volumes:
+        - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+        - ./mongo-volume:/data/db
